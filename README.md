@@ -1,4 +1,4 @@
-cupsofjava
+Cups of Java
 ==========
 
-Java stuff
+* Some Addons to the Amazing [Caudexorigo](https://github.com/lneves/javardices) Package
