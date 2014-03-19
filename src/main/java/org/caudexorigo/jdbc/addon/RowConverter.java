@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 public abstract class RowConverter<T> implements org.caudexorigo.jdbc.RowConverter<T>
 {
 
+	@Override
 	public T process(ResultSet rs)
 	{
 		try
