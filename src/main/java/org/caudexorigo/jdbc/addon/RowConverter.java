@@ -5,7 +5,10 @@
  */
 package org.caudexorigo.jdbc.addon;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
+import org.caudexorigo.text.StringBuilderWriter;
 
 /**
  *
@@ -15,19 +18,32 @@ import java.sql.ResultSet;
 public abstract class RowConverter<T> implements org.caudexorigo.jdbc.RowConverter<T>
 {
 
-	@Override
-	public T process(ResultSet rs)
-	{
-		try
-		{
-			return transform(rs);
-		}
-		catch (Throwable e)
-		{
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public T process(ResultSet rs)
+    {
+        try
+        {
+            return transform(rs);
+        }
+        catch (Throwable e)
+        {
+            try (StringBuilderWriter out = new StringBuilderWriter())
+            {
+                try (PrintWriter writer = new PrintWriter(out))
+                {
+                    e.printStackTrace(writer);
+                    out.flush();
+                    throw new RuntimeException(out.toString());
+                }
+            }
+            catch (IOException e1)
+            {
+                throw new RuntimeException(e1);
+            }
 
-	protected abstract T transform(ResultSet rs) throws Throwable;
+        }
+    }
+
+    protected abstract T transform(ResultSet rs) throws Throwable;
 
 }
