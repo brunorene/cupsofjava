@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,14 +20,15 @@ import java.util.Set;
 public class DBUtils
 {
 
-    public static Set<Integer> getSetFromSQLArray(Array a) throws SQLException
-    {
-        Set<Integer> s = new HashSet<>();
-        if (a != null)
-        {
-            s.addAll(Arrays.asList((Integer[]) a.getArray()));
-        }
+	private static final Logger log = LoggerFactory.getLogger(DBUtils.class);
 
-        return s;
-    }
+	public static Set<Integer> getSetFromSQLArray(Array a) throws SQLException
+	{
+		Set<Integer> s = new HashSet<>();
+		if (a != null)
+		{
+			s.addAll(Arrays.asList((Integer[]) a.getArray()));
+		}
+		return s;
+	}
 }
